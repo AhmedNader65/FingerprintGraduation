@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">FingerprintGraduation</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="auth_failed">Login failed!</string>
+    <string name="error_empty_password">You must enter password</string>
+    <string name="title_activity_admin_view_employee">AdminViewEmployee</string>
+    <string name="choose_a_date">Choose a date</string>
+    <string name="no_attendance_yet">No attendance yet</string>
+    <string name="logout">logout</string>
+    <string name="already_checked">You have already checked in today!</string>
+    <string name="login">Login</string>
+    <string name="check_in">Check in</string>
+    <string name="check_out">Check out</string>
+    <string name="date">Date</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="birthday">Birthday</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="location">Location</string>
+    <string name="location_select">Location Selection</string>
+    <string name="sure_location">Are you sure this is the location?</string>
+    <string name="yes">Yes, I\'m sure</string>
+    <string name="cancel">Cancel</string>
+    <string name="turn_gps_on">Turn on the GPS</string>
+    <string name="out_location">You are out of the location</string>
+</resources>

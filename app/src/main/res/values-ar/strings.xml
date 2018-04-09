@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">FingerprintGraduation</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">البريد الالكتروني</string>
+    <string name="prompt_password">الرقم السري</string>
+    <string name="action_sign_in">سجل الدخول</string>
+    <string name="action_sign_in_short">تسجيل دخول</string>
+    <string name="error_invalid_email">هذا البريد الالكتروني غير صحيح</string>
+    <string name="error_invalid_password">الرقم السري قصير جدا!</string>
+    <string name="error_incorrect_password">الرقم السري غير صحيح</string>
+    <string name="error_field_required">هذا الحقل مطلوب</string>
+    <string name="auth_failed">فشل تسجيل الدخول</string>
+    <string name="error_empty_password">يجب ادخال الرقم السري</string>
+    <string name="choose_a_date">اختر التاريخ</string>
+    <string name="no_attendance_yet">لم يتم تسجيل الحضور بعد!</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="already_checked">لقد قمت بتسجيل دخولك من قبل</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="check_in">تسجيل حضور</string>
+    <string name="check_out">تسجيل انصراف</string>
+    <string name="date">التاريخ</string>
+    <string name="name">الاسم</string>
+    <string name="address">العنوان</string>
+    <string name="birthday">تاريخ الميلاد</string>
+</resources>

@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg"
+    tools:context="com.grad.fingerprintgraduation.activities.LoginActivity">
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/relativeLayout">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_centerHorizontal="true"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"
+
+                />
+            <RelativeLayout
+                android:layout_below="@+id/logo"
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:singleLine="true"
+                    android:drawableLeft="@drawable/username_icon"
+                    android:drawablePadding="10dp"
+                    android:textColorHint="#fff"
+                    android:hint="@string/prompt_email"
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#fff"
+                    android:layout_marginBottom="8dp"
+                    />
+                <EditText
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:layout_below="@+id/email"
+                    android:drawableLeft="@drawable/password_icon"
+                    android:id="@+id/password"
+                    android:hint="Password"
+                    android:textColorHint="#fff"
+                    android:drawablePadding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#fff"
+                    android:layout_marginBottom="8dp"
+                    />
+                <Button
+                    android:layout_below="@id/password"
+                    android:layout_alignLeft="@id/password"
+                    android:layout_alignRight="@id/password"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/round_white_btn"
+                    android:text="@string/login"
+                    android:id="@+id/email_sign_in_button"
+                    android:textColor="#2e6e4e"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>
