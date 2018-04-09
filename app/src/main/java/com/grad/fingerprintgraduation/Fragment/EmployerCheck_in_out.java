@@ -28,6 +28,7 @@ public class EmployerCheck_in_out extends Fragment {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     boolean checkedToday = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,16 +39,16 @@ public class EmployerCheck_in_out extends Fragment {
         editor = sp.edit();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        if(day!=sp.getInt("day",0)){
-            editor.putBoolean("in",false);
+        if (day != sp.getInt("day", 0)) {
+            editor.putBoolean("in", false);
             editor.commit();
-        }else{
+        } else {
             checkedToday = true;
         }
-        if(sp.getBoolean("in",false)){
+        if (sp.getBoolean("in", false)) {
             inBtn.setVisibility(View.GONE);
             outBtn.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             inBtn.setVisibility(View.VISIBLE);
             outBtn.setVisibility(View.GONE);
         }
@@ -62,7 +63,7 @@ public class EmployerCheck_in_out extends Fragment {
         inBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(SmartLocation.with(getContext()).location().state().isGpsAvailable()) {
+                if (SmartLocation.with(getContext()).location().state().isGpsAvailable()) {
                     SmartLocation.with(getContext()).location()
                             .oneFix()
                             .start(new OnLocationUpdatedListener() {
@@ -70,48 +71,55 @@ public class EmployerCheck_in_out extends Fragment {
                                 public void onLocationUpdated(Location location) {
 
 
-                                    if(Utils.isInLocation(location.getLatitude(),location.getLongitude())){
-                                        Calendar calendar = Calendar.getInstance();
-                                        int day = calendar.get(Calendar.DAY_OF_WEEK);
-                                        if (day != sp.getInt("day", 0)) {
-                                            editor.putBoolean("in", false);
-                                            editor.commit();
-                                        } else {
-                                            checkedToday = true;
-                                        }
-                                        // Write a message to the database
-                                        if (checkedToday) {
-                                            Toast.makeText(getContext(), R.string.already_checked, Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
+                                    Utils.isInLocation(location.getLatitude(), location.getLongitude(), new Utils.OnDataFetchComplete() {
+                                        @Override
+                                        public void OnDataFetchCompleted(boolean inLoc) {
+                                            if (inLoc) {
+                                                Calendar calendar = Calendar.getInstance();
+                                                int day = calendar.get(Calendar.DAY_OF_WEEK);
+                                                if (day != sp.getInt("day", 0)) {
+                                                    editor.putBoolean("in", false);
+                                                    editor.commit();
+                                                } else {
+                                                    checkedToday = true;
+                                                }
+                                                // Write a message to the database
+                                                if (checkedToday) {
+                                                    Toast.makeText(getContext(), R.string.already_checked, Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
 
 
-                                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                        DatabaseReference myRef = database.getReference("company").child("MonthAttendence")
-                                                .child(Utils.getCurrentDayDate()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("in-time");
+                                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                                DatabaseReference myRef = database.getReference("company").child("MonthAttendence")
+                                                        .child(Utils.getCurrentDayDate()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("in-time");
 
-                                        DatabaseReference myRef2 = database.getReference("company").child("MonthAttendenceForUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .child(Utils.getCurrentDayDate2()).child("in-time");
+                                                DatabaseReference myRef2 = database.getReference("company").child("MonthAttendenceForUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                        .child(Utils.getCurrentDayDate2()).child("in-time");
 //
 //                DatabaseReference myRef = database.getReference("company").child("MonthAttendence")
 //                        .child(Utils.getCurrentYear()).child(Utils.getCurrentMonth())
 //                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Utils.getCurrentDay()).child("in-time");
 
-                                        myRef.setValue(Utils.getCurrentClockDate());
-                                        myRef2.setValue(Utils.getCurrentClockDate());
-                                        editor.putBoolean("in", true);
-                                        editor.putInt("day", day);
-                                        editor.commit();
-                                        inBtn.setVisibility(View.GONE);
-                                        outBtn.setVisibility(View.VISIBLE);
-                                    }else{
-                                        // Out of location
-                                        Toast.makeText(getContext(), R.string.out_location, Toast.LENGTH_SHORT).show();
-                                    }
+                                                myRef.setValue(Utils.getCurrentClockDate());
+                                                myRef2.setValue(Utils.getCurrentClockDate());
+                                                editor.putBoolean("in", true);
+                                                editor.putInt("day", day);
+                                                editor.commit();
+                                                inBtn.setVisibility(View.GONE);
+                                                outBtn.setVisibility(View.VISIBLE);
+                                            } else {
+                                                // Out of location
+                                                Toast.makeText(getContext(), R.string.out_location, Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    });
+
                                 }
                             });
 
-                }else{
+                } else {
                     Toast.makeText(getContext(), R.string.turn_gps_on, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -120,33 +128,39 @@ public class EmployerCheck_in_out extends Fragment {
         outBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(SmartLocation.with(getContext()).location().state().isGpsAvailable()) {
+                if (SmartLocation.with(getContext()).location().state().isGpsAvailable()) {
                     SmartLocation.with(getContext()).location()
                             .oneFix()
                             .start(new OnLocationUpdatedListener() {
                                 @Override
                                 public void onLocationUpdated(Location location) {
-                                    if(Utils.isInLocation(location.getLatitude(),location.getLongitude())){
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("company").child("MonthAttendence")
-                        .child(Utils.getCurrentDayDate()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("out-time");
+                                    Utils.isInLocation(location.getLatitude(), location.getLongitude(), new Utils.OnDataFetchComplete() {
+                                        @Override
+                                        public void OnDataFetchCompleted(boolean inLoc) {
+                                            if (inLoc) {
 
-                DatabaseReference myRef2 = database.getReference("company").child("MonthAttendenceForUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child(Utils.getCurrentDayDate2()).child("out-time");
-                myRef.setValue(Utils.getCurrentClockDate());
-                myRef2.setValue(Utils.getCurrentClockDate());
-                outBtn.setVisibility(View.GONE);
-                inBtn.setVisibility(View.VISIBLE);
-                editor.putBoolean("in",false);
-                editor.commit();
-                                    }else{
-                                        // Out of location
-                                        Toast.makeText(getContext(), R.string.out_location, Toast.LENGTH_SHORT).show();
-                                    }
+                                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                                DatabaseReference myRef = database.getReference("company").child("MonthAttendence")
+                                                        .child(Utils.getCurrentDayDate()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("out-time");
+
+                                                DatabaseReference myRef2 = database.getReference("company").child("MonthAttendenceForUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                        .child(Utils.getCurrentDayDate2()).child("out-time");
+                                                myRef.setValue(Utils.getCurrentClockDate());
+                                                myRef2.setValue(Utils.getCurrentClockDate());
+                                                outBtn.setVisibility(View.GONE);
+                                                inBtn.setVisibility(View.VISIBLE);
+                                                editor.putBoolean("in", false);
+                                                editor.commit();
+                                            } else {
+                                                // Out of location
+                                                Toast.makeText(getContext(), R.string.out_location, Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                 }
                             });
 
-                }else{
+                } else {
                     Toast.makeText(getContext(), R.string.turn_gps_on, Toast.LENGTH_SHORT).show();
                 }
             }
